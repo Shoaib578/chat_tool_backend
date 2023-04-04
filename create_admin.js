@@ -4,21 +4,23 @@ const bcrypt = require("bcryptjs")
 
 const saltRounds = 10; 
 
-function is_admin_exist(){
+function create_admin(){
     const sql = queries.filter_admin
    
 
-    let check = connection.query(sql,(err,result)=>{
+     connection.query(sql,(err,result)=>{
         if(err) throw err
-        return result
+        if(result.length<1){
+            bcrypt.hash("admin", saltRounds, function (err, hash) {
+                if (err) throw err;
+                add_admin("theadmin@gmail.com",hash,"Admin")
+            })
+        }
+         
     })
 
-
-   if(check.length>0){
-    return true
-   }else{
-    return false
-   }
+   
+   
 
     
 }
@@ -31,16 +33,7 @@ connection.query(sql,(err,result)=>{
 })
 }
 
-const create_admin=()=>{
-let admin = is_admin_exist()
-if(!admin){
-    bcrypt.hash("admin", saltRounds, function (err, hash) {
-        if (err) throw err;
-        add_admin("theadmin@gmail.com",hash,"Admin")
-    })    
-}
 
-}
 
 create_admin()
 
