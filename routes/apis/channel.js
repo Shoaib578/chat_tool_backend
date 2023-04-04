@@ -57,7 +57,7 @@ router.get('/view_channel_by_id',(req,res)=>{
 router.get('/delete_channel',(req,res)=>{
     let channel_id = req.query.channel_id
     let sql = queries.delete_channel(channel_id)
-    connection.query(sql,(req,res)=>{
+    connection.query(sql,(err,result)=>{
         if(err)throw err;
         
         return res.json({

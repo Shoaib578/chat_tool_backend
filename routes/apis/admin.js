@@ -43,7 +43,7 @@ router.get('/get_all_channels',(req,res)=>{
 router.get('/delete_channel',(req,res)=>{
     let channel_id = req.query.channel_id
     let sql = queries.delete_channel(channel_id)
-    connection.query(sql,(req,res)=>{
+    connection.query(sql,(err,result)=>{
         if(err)throw err;
         
         return res.json({
@@ -56,7 +56,7 @@ router.get('/delete_channel',(req,res)=>{
 
 router.get('/get_all_messages',(req,res)=>{
    let sql = queries.get_all_messages
-   connection.query(sql,(req,res)=>{
+   connection.query(sql,(err,result)=>{
     if(err)throw err
     return res.json({
         "status":"success",
@@ -70,11 +70,35 @@ router.get('/delete_message',(req,res)=>{
     let message_id = req.query.message_id
     let sql = queries.delete_message(message_id)
 
-    connection.query(sql,(req,res)=>{
+    connection.query(sql,(err,result)=>{
         if(err)throw err;
         
         return res.json({
             "status":"message deleted",
+            "is_deleted":true
+        })
+    })
+})
+
+
+router.get('/get_all_replies',(req,res)=>{
+    let sql = queries.get_all_replies
+    connection.query(sql,(err,result)=>{
+        if(err)throw err
+        return res.json({
+            "status":"success",
+            "data":result
+        })
+    })
+})
+
+router.get('/delete_reply',(req,res)=>{
+    let reply_id = req.query.reply_id
+    let sql = queries.delete_reply(reply_id)
+    connection.query(sql,(err,result)=>{
+        if(err)throw err;
+        return res.json({
+            "status":"reply deleted",
             "is_deleted":true
         })
     })
