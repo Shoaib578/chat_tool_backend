@@ -8,7 +8,6 @@ const saltRounds = 10;
 
 
 
-
 router.post('/send_message',(req,res)=>{
      let message = req.body.message
      let user_id = req.body.user_id
@@ -27,9 +26,9 @@ router.post('/send_message',(req,res)=>{
 
 router.get('/get_messages',(req,res)=>{
     let channel_id = req.query.channel_id
-  
+    let user_id = req.query.user_id
     console.log(channel_id)
-    let messages_sql = queries.get_messages(channel_id)
+    let messages_sql = queries.get_messages(channel_id,user_id)
     let reply_sql = queries.get_replies(channel_id)
     connection.query(messages_sql,(err,messages)=>{
         if(err) throw err

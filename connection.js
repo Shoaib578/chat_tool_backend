@@ -44,5 +44,13 @@ con.connect(function(err) {
         if (err) throw err;
         console.log("Replies Table created");
       });
+
+
+      //Replies Table creation
+
+      con.query(queries.like_and_dislike_table_sql, function (err, result) {
+        if (err) throw err;
+        console.log("LikesDislikes Table created");
+      });
   });
 module.exports = con;

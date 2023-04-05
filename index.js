@@ -53,6 +53,60 @@ socketIO.on('connection', (socket) => {
         })
        
     })
+
+
+    socket.on("like",(data)=>{
+        const check_sql = queries.if_like_exist(data.message_id,data.user_id)
+       
+       
+        connection.query(check_sql,(err,result)=>{
+           if(err)throw err
+         
+
+           let final_sql;
+   
+           if(result.length>0){
+               final_sql = queries.update_like(data.message_id,data.user_id,data.action)
+               
+    
+           }else{
+               final_sql = queries.insert_like(data.message_id,data.user_id)
+   
+           }
+           connection.query(final_sql,(err,result)=>{
+               if(err)throw err
+               socket.broadcast.emit("receive_message_changes",data)
+   
+           })
+   
+         })
+         console.log(data)
+       })
+
+
+    socket.on("dislike",(data)=>{
+     const check_sql = queries.if_dislike_exist(data.message_id,data.user_id)
+     
+     connection.query(check_sql,(err,result)=>{
+        if(err)throw err
+        let final_sql;
+
+        if(result.length>0){
+            final_sql = queries.update_dislike(data.message_id,data.user_id,data.action)
+           
+        }else{
+            final_sql = queries.insert_dislike(data.message_id,data.user_id)
+
+        }
+        connection.query(final_sql,(err,result)=>{
+            if(err)throw err
+            socket.broadcast.emit("receive_message_changes",data)
+
+        })
+
+      })
+      console.log(data)
+    })
    
 });
 
@@ -80,4 +134,6 @@ const port = process.env.PORT || 5000;
  http.listen(port, () => {
     console.log(`Server listening on ${port}`);
 }) 
+
+
 
