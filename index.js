@@ -2,7 +2,6 @@ const express = require('express')
 const app = express()
 const connection = require('./connection')
 const upload = require('express-fileupload')
-const create_admin = require('./create_admin')
 const http = require('http').Server(app);
 const queries = require('./queries')
 

@@ -35,6 +35,6 @@ connection.query(sql,(err,result)=>{
 
 
 
-create_admin()
+
 
 module.exports = create_admin

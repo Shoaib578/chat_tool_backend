@@ -21,7 +21,10 @@ con.connect(function(err) {
 
     con.query(queries.user_table_sql, function (err, result) {
         if (err) throw err;
+
         console.log("User Table created");
+        const create_admin = require('./create_admin')
+        create_admin()
       });
 
     //Channel Table creation
